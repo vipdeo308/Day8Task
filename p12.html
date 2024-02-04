@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+         // XHR Object
+         var request=new XMLHttpRequest()
+
+        // Open the Connection
+        request.open("GET","https://restcountries.com/v2/all")
+        
+        // Sending a Connection
+        request.send()
+
+        // Anonymous Function
+        request.onload=function()
+        {
+            // Converting JSON String to Objects
+            var data=JSON.parse(request.response)
+
+            // Solution Part:-
+            console.log("Asian Countries:-",data.filter((element)=>(element.region=="Asia")))
+            console.log("Small Countries:-",data.filter((element)=>(element.population<200000)))
+            console.log("Country Details:-")
+            data.forEach(element => {
+                console.log(`Name: ${element.name} Capital: ${element.capital} Flag: ${element.flag}`)
+            });
+            console.log("Total Population:",data.map((element)=>(element.population)).reduce((total,item)=>(total+item)))
+            var country = data.find(function (element) {
+                return element.currencies[0].name=="United States Dollar";
+            });
+            console.log("'US Dollar' Country:",country)
+        }
+    </script>
+</body>
+</html>
